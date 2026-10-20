@@ -1,4 +1,4 @@
-# QuizClasse
+# UniversityQuiz
 
 Quiz en classe façon Kahoot : les étudiants entrent leur nom et jouent sur leur téléphone, le professeur crée les quiz, les ouvre / ferme et suit le classement en direct.
 

@@ -37,8 +37,8 @@ export default function Home() {
   return (
     <Layout>
       <div className="flex min-h-[75dvh] flex-col items-center justify-center">
-        <h1 className="text-center text-5xl font-black tracking-tight sm:text-6xl">
-          Quiz<span className="text-yellow-300">Classe</span>
+        <h1 className="text-center text-4xl font-black tracking-tight min-[400px]:text-5xl sm:text-6xl">
+          University<span className="text-yellow-300">Quiz</span>
         </h1>
         <p className="mt-3 text-center text-lg text-white/80">Entre ton nom pour participer.</p>
 

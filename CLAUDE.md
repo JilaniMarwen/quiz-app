@@ -1,4 +1,4 @@
-# QuizClasse
+# UniversityQuiz
 
 Quiz app for a classroom (Kahoot-like). Full spec and roadmap: see `PLAN.md` — always follow its business rules (section 2).
 

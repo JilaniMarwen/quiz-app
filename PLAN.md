@@ -1,4 +1,4 @@
-# QuizClasse — Feuille de route
+# UniversityQuiz — Feuille de route
 
 Application web responsive de quiz en classe (alternative à Kahoot), pour la fin de la présentation d'entrepreneuriat.
 
@@ -212,7 +212,7 @@ Backend Laravel + MySQL  (Railway, Render… connecté au même repo GitHub)
    ```
    git init
    git add .
-   git commit -m "QuizClasse"
+   git commit -m "UniversityQuiz"
    git branch -M main
    git remote add origin https://github.com/<ton-user>/quiz-app.git
    git push -u origin main

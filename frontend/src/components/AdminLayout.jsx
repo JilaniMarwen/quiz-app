@@ -10,7 +10,7 @@ export default function AdminLayout({ title, back, actions, children }) {
       <header className="bg-indigo-700 text-white shadow">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
           <Link to="/prof" className="text-lg font-black tracking-tight">
-            Quiz<span className="text-yellow-300">Classe</span>
+            University<span className="text-yellow-300">Quiz</span>
             <span className="ml-2 rounded bg-white/15 px-2 py-0.5 text-xs font-bold uppercase">Prof</span>
           </Link>
           {admin && (
