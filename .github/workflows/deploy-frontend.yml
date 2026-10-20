@@ -2,7 +2,7 @@
 # Repository settings needed:
 #   Settings → Pages → Source: GitHub Actions
 #   Settings → Secrets and variables → Actions → Variables:
-#     VITE_API_URL     (required) e.g. https://quiz-app-api.up.railway.app/api
+#     VITE_API_URL     (optional, overrides frontend/.env.production) e.g. https://quiz-app-api.up.railway.app/api
 #     VITE_PUBLIC_URL  (optional) address shown in the dashboard QR code
 name: Deploy frontend
 
@@ -38,19 +38,22 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/package-lock.json
 
-      - name: Check configuration
-        run: |
-          if [ -z "${{ vars.VITE_API_URL }}" ]; then
-            echo "::error::Repository variable VITE_API_URL is not set (Settings → Secrets and variables → Actions → Variables)."
-            exit 1
-          fi
-
       - run: npm ci
 
-      - run: npm run build
+      # API URL: repository variable VITE_API_URL if set, otherwise frontend/.env.production.
+      - name: Build
+        run: |
+          if [ -n "${{ vars.VITE_API_URL }}" ]; then
+            export VITE_API_URL="${{ vars.VITE_API_URL }}"
+          elif ! grep -q '^VITE_API_URL=' .env.production 2>/dev/null; then
+            echo "::error::No API URL: set the VITE_API_URL repository variable or frontend/.env.production."
+            exit 1
+          fi
+          if [ -n "${{ vars.VITE_PUBLIC_URL }}" ]; then
+            export VITE_PUBLIC_URL="${{ vars.VITE_PUBLIC_URL }}"
+          fi
+          npm run build
         env:
-          VITE_API_URL: ${{ vars.VITE_API_URL }}
-          VITE_PUBLIC_URL: ${{ vars.VITE_PUBLIC_URL }}
           VITE_BASE: /${{ github.event.repository.name }}/
 
       - uses: actions/upload-pages-artifact@v3
