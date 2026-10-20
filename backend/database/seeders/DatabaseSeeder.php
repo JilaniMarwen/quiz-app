@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminSeeder::class,
             DemoQuizSeeder::class,
+            ClassificationQuizSeeder::class,
         ]);
     }
 }

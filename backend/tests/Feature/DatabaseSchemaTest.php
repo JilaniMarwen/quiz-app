@@ -62,7 +62,7 @@ class DatabaseSchemaTest extends TestCase
         $this->assertArrayNotHasKey('token', $student->toArray());
     }
 
-    public function test_seeder_creates_admin_from_env_and_closed_demo_quiz(): void
+    public function test_seeder_creates_admin_from_env_and_closed_valid_quizzes(): void
     {
         config(['admin.username' => 'prof', 'admin.password' => 'secret123']);
 
@@ -73,12 +73,15 @@ class DatabaseSchemaTest extends TestCase
         $this->assertSame('prof', $admin->username);
         $this->assertTrue(Hash::check('secret123', $admin->password));
 
-        $quiz = Quiz::with('questions.choices')->sole();
-        $this->assertFalse($quiz->is_open);
-        $this->assertCount(5, $quiz->questions);
-        foreach ($quiz->questions as $question) {
-            $this->assertCount(4, $question->choices);
-            $this->assertSame(1, $question->choices->where('is_correct', true)->count());
+        $quizzes = Quiz::with('questions.choices')->get()->keyBy('title');
+        $this->assertSame(
+            ["Les bases de l'entrepreneuriat" => 5, 'La classification des entreprises' => 14],
+            $quizzes->map(fn ($quiz) => $quiz->questions->count())->all(),
+        );
+
+        foreach ($quizzes as $quiz) {
+            $this->assertFalse($quiz->is_open);
+            $this->assertTrue($quiz->isValid()); // 4 choices, exactly 1 correct (rule 8)
         }
     }
 }
